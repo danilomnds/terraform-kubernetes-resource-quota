@@ -1,0 +1,3 @@
+variable "quota" {
+  type = any
+}
