@@ -1,9 +1,12 @@
-# Module - Quotas AKS
+# Module - Quotas K8S
 [![COE](https://img.shields.io/badge/Created%20By-CCoE-blue)]()
 [![HCL](https://img.shields.io/badge/language-HCL-blueviolet)](https://www.terraform.io/)
 [![Azure](https://img.shields.io/badge/provider-Azure-blue)](https://registry.terraform.io/providers/hashicorp/azurerm/latest)
 
-Module created to help the quota management in AKS environments. If you want to use this module in GKE, OKE or EKS you'll have to change the storage classes on [resource.tf](resource.tf)
+Module created to help the quota management in K8S environments. It's initially preconfigured for AKS, you can check the default storage class and quotas on [locals.tf](locals.tf).
+It can be used in GKE, OKE or EKS without any customization. 
+
+If you want to define default quotas for some resource or storage class, then you'll have to edit the [locals.tf](locals.tf).
 
 ## Compatibility matrix
 
@@ -23,7 +26,7 @@ Note: The `?ref=***` refers a tag on the git module repo.
 ```hcl
 module "<clustername>-<quotas>" {
   source = "git::https://github.com/danilomnds/terraform-kubernetes-resource-quota?ref=v1.0.0"
-  quota = {
+  definition = {
     <namespace-name> = {
       # is mandatory to pass at least one namespace
       namespace         = <namespace-name>
@@ -37,7 +40,7 @@ module "<clustername>-<quotas>" {
 ```hcl
 module "<clustername>-<quotas>" {
   source = "git::https://github.com/danilomnds/terraform-kubernetes-resource-quota?ref=v1.0.0"
-  quota = {
+  definition = {
     <namespace-name> = {
       # is mandatory to pass at least one namespace
       namespace    = <namespace-name>
@@ -49,21 +52,25 @@ module "<clustername>-<quotas>" {
         "env" = "fqa"
       }
       # if you don't specify a value for the resource the quota will be 0
-      "requests.cpu" = "1"
-      "requests.memory" = "1Gi"
-      "limits.cpu" = "2"
-      "limits.memory" = "2Gi"
-      "requests.storage" = "210Gi"
-      "persistentvolumeclaims" = "12"
-      "azurefile.storageclass.storage.k8s.io/requests.storage" = "0Gi"
-      "azurefile-csi.storageclass.storage.k8s.io/requests.storage" = "110Gi"
-      "azurefile-csi-premium.storageclass.storage.k8s.io/requests.storage" = "100Gi"
-      "azurefile-premium.storageclass.storage.k8s.io/requests.storage" = "0Gi"
-      "default.storageclass.storage.k8s.io/requests.storage" = "0Gi"
-      "managed.storageclass.storage.k8s.io/requests.storage" = "0Gi"
-      "managed-csi.storageclass.storage.k8s.io/requests.storage" = "0Gi"
-      "managed-csi-premium.storageclass.storage.k8s.io/requests.storage" = "0Gi"
-      "managed-premium.storageclass.storage.k8s.io/requests.storage" = "0Gi"
+      quotas = {
+        "requests.cpu" = "1"
+        "requests.memory" = "1Gi"
+        "limits.cpu" = "2"
+        "limits.memory" = "2Gi"
+        "requests.storage" = "210Gi"
+        "persistentvolumeclaims" = "12"
+        "azurefile.storageclass.storage.k8s.io/requests.storage" = "0Gi"
+        "azurefile-csi.storageclass.storage.k8s.io/requests.storage" = "110Gi"
+        "azurefile-csi-premium.storageclass.storage.k8s.io/requests.storage" = "100Gi"
+        "azurefile-premium.storageclass.storage.k8s.io/requests.storage" = "0Gi"
+        "default.storageclass.storage.k8s.io/requests.storage" = "0Gi"
+        "managed.storageclass.storage.k8s.io/requests.storage" = "0Gi"
+        "managed-csi.storageclass.storage.k8s.io/requests.storage" = "0Gi"
+        "managed-csi-premium.storageclass.storage.k8s.io/requests.storage" = "0Gi"
+        "managed-premium.storageclass.storage.k8s.io/requests.storage" = "0Gi"
+        # you can add custom storage classes or different resources such as pods.
+        "pods" = "<some value>"
+      }
     }
   }
 }
@@ -73,7 +80,7 @@ module "<clustername>-<quotas>" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| quota | Definitions for the quota creation  | `any` | n/a | yes |
+| definition | Definitions for the quota creation  | `any` | n/a | yes |
 
 ## Documentation
 

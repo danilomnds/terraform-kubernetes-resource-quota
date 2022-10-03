@@ -1,3 +1,3 @@
-variable "quota" {
+variable "definition" {
   type = any
 }
