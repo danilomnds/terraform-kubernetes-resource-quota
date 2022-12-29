@@ -12,7 +12,7 @@ If you want to define default quotas for some resource or storage class, then yo
 
 | Module Version | Terraform Version | Kubernetes Provider Version |
 |----------------|-------------------| --------------- |
-| v1.0.0       | v1.3.1 | 2.13.1         |
+| v1.0.0       | v1.3.6 | 2.16.0         |
 
 ## Specifying a version
 

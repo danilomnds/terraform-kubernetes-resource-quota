@@ -8,4 +8,9 @@ resource "kubernetes_resource_quota" "quota" {
   spec {
     hard = merge(local.default_quotas, lookup(each.value, "quotas", null))
   }
+  lifecycle {
+    ignore_changes = [
+      metadata[0].resource_version
+    ]
+  }
 }
