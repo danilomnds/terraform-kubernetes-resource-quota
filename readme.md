@@ -11,8 +11,8 @@ If you want to define default quotas for some resource or storage class, then yo
 ## Compatibility matrix
 
 | Module Version | Terraform Version | Kubernetes Provider Version |
-|----------------|-------------------| --------------- |
-| v1.0.0       | v1.3.6 | 2.16.0         |
+|----------------|-------------------| --------------------------- |
+| v1.0.0         | v1.3.6            | 2.17.0                      |
 
 ## Specifying a version
 
@@ -29,7 +29,7 @@ module "<clustername>-<quotas>" {
   definition = {
     <namespace-name> = {
       # is mandatory to pass at least one namespace
-      namespace         = <namespace-name>
+      namespace = <namespace-name>
     }    
   }
 }
@@ -43,7 +43,7 @@ module "<clustername>-<quotas>" {
   definition = {
     <namespace-name> = {
       # is mandatory to pass at least one namespace
-      namespace    = <namespace-name>
+      namespace = <namespace-name>
       # if you want a custom suffix name
       suffix_quota = "custom"
       # if you want to define some tags (this is not mandatory)
@@ -80,7 +80,7 @@ module "<clustername>-<quotas>" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| definition | Definitions for the quota creation  | `any` | n/a | yes |
+| definition | Definitions for the quota creation  | `any` | n/a | `Yes` |
 
 ## Documentation
 
